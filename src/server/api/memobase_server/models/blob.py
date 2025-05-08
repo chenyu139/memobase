@@ -16,6 +16,10 @@ class TranscriptStamp(BaseModel):
     start_timestamp_in_seconds: float
     end_time_timestamp_in_seconds: Optional[float] = None
     speaker: Optional[str] = None
+    subject: Optional[str] = None  # 主体
+    action: Optional[str] = None  # 做了什么
+    metrics: Optional[dict] = None  # 关键衡量数据
+    result: Optional[dict] = None  # 做的结果
 
 
 class BlobType(StrEnum):
@@ -85,7 +89,9 @@ class BlobData(BaseModel):
             return DocBlob(
                 **self.blob_data, fields=self.fields, created_at=self.created_at
             )
+        elif self.blob_type == BlobType.transcript:
+            return TranscriptBlob(
+                **self.blob_data, fields=self.fields, created_at=self.created_at
+            )
         elif self.blob_type == BlobType.image:
             raise NotImplementedError("ImageBlob not implemented yet.")
-        elif self.blob_type == BlobType.transcript:
-            raise NotImplementedError("TranscriptBlob not implemented yet.")

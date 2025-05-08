@@ -13,6 +13,10 @@ DATABASE_URL = os.getenv("DATABASE_URL")
 REDIS_URL = os.getenv("REDIS_URL")
 PROJECT_ID = os.getenv("PROJECT_ID")
 
+DATABASE_URL="postgresql://memobase:helloworld@47.89.152.185:15432/memobase"
+REDIS_URL="redis://:helloworld@47.89.152.185:16379"
+ACCESS_TOKEN="secret"
+
 if PROJECT_ID is None:
     LOG.warning(f"PROJECT_ID is not set")
     PROJECT_ID = "default"

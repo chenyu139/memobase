@@ -98,8 +98,14 @@ def pack_blob_from_db(blob: GeneralBlob, blob_type: BlobType) -> Blob:
             return ChatBlob(**blob_data, created_at=blob.created_at)
         case BlobType.doc:
             return DocBlob(**blob_data, created_at=blob.created_at)
+        case BlobType.action:
+            # 为了向后兼容，保留action类型的处理，但使用TranscriptBlob
+            return TranscriptBlob(**blob_data, created_at=blob.created_at)
+        case BlobType.transcript:
+            return TranscriptBlob(**blob_data, created_at=blob.created_at)
         case _:
             raise ValueError(f"Unsupported Blob Type: {blob_type}")
+
 
 
 def get_message_timestamp(
@@ -133,8 +139,24 @@ def get_blob_str(blob: Blob):
             )
         case BlobType.doc:
             return cast(DocBlob, blob).content
+        case BlobType.action:
+            # 为了向后兼容，保留action类型的处理，但使用TranscriptBlob
+            return "\n".join(
+                [
+                    f"[{t.start_timestamp_in_seconds}] {t.speaker or 'Unknown'}: {t.content}"
+                    for t in cast(TranscriptBlob, blob).transcripts
+                ]
+            )
+        case BlobType.transcript:
+            return "\n".join(
+                [
+                    f"[{t.start_timestamp_in_seconds}] {t.speaker or 'Unknown'}: {t.content}"
+                    for t in cast(TranscriptBlob, blob).transcripts
+                ]
+            )
         case _:
             raise ValueError(f"Unsupported Blob Type: {blob.type}")
+
 
 
 def get_blob_token_size(blob: Blob):
