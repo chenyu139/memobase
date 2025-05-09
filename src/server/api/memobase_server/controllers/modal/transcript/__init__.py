@@ -115,9 +115,14 @@ async def handle_session_event(
 async def exe_user_profile_add(
     user_id: str, project_id: str, profile_options: MergeAddResult
 ) -> Promise[IdsData]:
-    if not profile_options["add"]:
+    if not len(profile_options["add"]):
         return Promise.resolve(IdsData(ids=[]))
-    p = await add_user_profiles(user_id, project_id, profile_options["add"])
+    p = await add_user_profiles(
+        user_id,
+        project_id,
+        [ap["content"] for ap in profile_options["add"]],
+        [ap["attributes"] for ap in profile_options["add"]],
+    )
     if not p.ok():
         return p
     return p
@@ -126,9 +131,15 @@ async def exe_user_profile_add(
 async def exe_user_profile_update(
     user_id: str, project_id: str, profile_options: MergeAddResult
 ) -> Promise[IdsData]:
-    if not profile_options["update"]:
+    if not len(profile_options["update"]):
         return Promise.resolve(IdsData(ids=[]))
-    p = await update_user_profiles(user_id, project_id, profile_options["update"])
+    p = await update_user_profiles(
+        user_id,
+        project_id,
+        [up["profile_id"] for up in profile_options["update"]],
+        [up["content"] for up in profile_options["update"]],
+        [up["attributes"] for up in profile_options["update"]],
+    )
     if not p.ok():
         return p
     return p

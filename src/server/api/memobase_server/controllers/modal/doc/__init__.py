@@ -13,6 +13,7 @@ from ..chat.organize import organize_profiles
 from ..chat.types import MergeAddResult
 from ..chat.event_summary import tag_event
 from ..chat.entry_summary import entry_summary
+import uuid
 
 
 async def process_blobs(
@@ -43,16 +44,16 @@ async def process_blobs(
     delta_profile_data = [
         p for p in (profile_options["add"] + profile_options["update_delta"])
     ]
-    p = await handle_session_event(
-        user_id,
-        project_id,
-        user_memo_str,
-        delta_profile_data,
-        extracted_data["config"],
-    )
-    if not p.ok():
-        return p
-    eid = p.data()
+    # p = await handle_session_event(
+    #     user_id,
+    #     project_id,
+    #     user_memo_str,
+    #     delta_profile_data,
+    #     extracted_data["config"],
+    # )
+    # if not p.ok():
+    #     return p
+    # eid = p.data()
 
     # 3. 检查是否需要组织配置文件
     p = await organize_profiles(
@@ -87,7 +88,7 @@ async def process_blobs(
     delete_profile_ids = p.data().ids
     return Promise.resolve(
         ChatModalResponse(
-            event_id=eid,
+            event_id= str(uuid.uuid4()),
             add_profiles=add_profile_ids,
             update_profiles=update_profile_ids,
             delete_profiles=delete_profile_ids,
@@ -115,9 +116,14 @@ async def handle_session_event(
 async def exe_user_profile_add(
     user_id: str, project_id: str, profile_options: MergeAddResult
 ) -> Promise[IdsData]:
-    if not profile_options["add"]:
+    if not len(profile_options["add"]):
         return Promise.resolve(IdsData(ids=[]))
-    p = await add_user_profiles(user_id, project_id, profile_options["add"])
+    p = await add_user_profiles(
+        user_id,
+        project_id,
+        [ap["content"] for ap in profile_options["add"]],
+        [ap["attributes"] for ap in profile_options["add"]],
+    )
     if not p.ok():
         return p
     return p
@@ -126,9 +132,15 @@ async def exe_user_profile_add(
 async def exe_user_profile_update(
     user_id: str, project_id: str, profile_options: MergeAddResult
 ) -> Promise[IdsData]:
-    if not profile_options["update"]:
+    if not len(profile_options["update"]):
         return Promise.resolve(IdsData(ids=[]))
-    p = await update_user_profiles(user_id, project_id, profile_options["update"])
+    p = await update_user_profiles(
+        user_id,
+        project_id,
+        [up["profile_id"] for up in profile_options["update"]],
+        [up["content"] for up in profile_options["update"]],
+        [up["attributes"] for up in profile_options["update"]],
+    )
     if not p.ok():
         return p
     return p

@@ -5,7 +5,7 @@ from collections import defaultdict
 from typing import Optional
 from pydantic import HttpUrl, ValidationError
 from dataclasses import dataclass
-from .blob import BlobData, Blob, BlobType, ChatBlob, OpenAICompatibleMessage
+from .blob import BlobData, Blob, BlobType, ChatBlob, DocBlob, TranscriptBlob, OpenAICompatibleMessage
 from .user import UserProfile, UserProfileData, UserEventData
 from ..network import unpack_response
 from ..error import ServerError
