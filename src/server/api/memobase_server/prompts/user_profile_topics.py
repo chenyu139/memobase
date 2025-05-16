@@ -37,6 +37,11 @@ CANDIDATE_PROFILE_TOPICS: list[UserProfileTopic] = [
             "school",
             "degree",
             "major",
+            "country",  # 所属国家
+            "education_stage",  # 所属阶段，例如：高中高年级（11-12年级，大学预科阶段）
+            "subject",  # 所属学科，例如：生物学（侧重现代生物学的核心领域）
+            "depth_level",  # 所属深度，例如：大学一年级入门水平（AP考试对标美国大学基础课程难度）
+            "importance",  # 对当前学生的重要度
         ],
     ),
     UserProfileTopic(

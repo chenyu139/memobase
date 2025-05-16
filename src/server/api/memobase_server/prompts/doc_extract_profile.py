@@ -176,6 +176,34 @@ If you do not find any relevant facts, user memories, and preferences in the doc
 Below is the list of topics and subtopics that you should focus on collecting and extracting:
 {{topic_examples}}
 
+#### Special Education Information Extraction Guidelines
+When extracting educational information, pay special attention to these sub-topics:
+
+1. **country** - Identify the country where the education is taking place or the educational system being referenced (e.g., "United States", "China", "United Kingdom").
+
+2. **education_stage** - Determine the specific educational stage or level, being as precise as possible. Examples:
+   - "High school senior level (11-12th grade, university preparatory stage)"
+   - "Middle school (7-9th grade)"
+   - "Undergraduate level"
+   - "Graduate level"
+
+3. **subject** - Identify the specific academic subject or discipline, including any specialization areas. Examples:
+   - "Biology (focusing on core areas of modern biology)"
+   - "Physics (mechanics and electromagnetism)"
+   - "Computer Science (algorithms and data structures)"
+
+4. **depth_level** - Assess the depth or difficulty level of the educational content. Examples:
+   - "First-year college introductory level (AP exam targeting US college foundation course difficulty)"
+   - "Advanced high school level"
+   - "Graduate entry level"
+
+5. **importance** - Evaluate how important this educational content is for the student, based on context. Examples:
+   - "Core required course"
+   - "Elective supplementary course"
+   - "Essential content for college entrance exams"
+
+When these details aren't explicitly stated, make reasonable inferences based on context clues in the document.
+
 Now perform your task.
 """
 
