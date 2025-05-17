@@ -9,6 +9,7 @@ from ....prompts import (
     zh_extract_profile,
     zh_merge_profile,
     zh_summary_entry_chats,
+    doc_extract_profile,
 )
 from ....models.response import ProfileData
 
@@ -40,6 +41,7 @@ PROMPTS = {
         "extract": extract_profile,
         "merge": merge_profile,
         "organize": organize_profile,
+        "doc_extract": doc_extract_profile,
     },
     "zh": {
         "entry_summary": zh_summary_entry_chats,
@@ -47,5 +49,6 @@ PROMPTS = {
         "extract": zh_extract_profile,
         "merge": zh_merge_profile,
         "organize": organize_profile,
+        "doc_extract": doc_extract_profile,
     },
 }

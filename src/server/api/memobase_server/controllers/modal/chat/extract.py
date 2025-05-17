@@ -87,16 +87,16 @@ async def extract_topics(
 
     p = await llm_complete(
         project_id,
-        PROMPTS[USE_LANGUAGE]["extract"].pack_input(
+        PROMPTS[USE_LANGUAGE]["doc_extract"].pack_input(
             already_topics_prompt,
             user_memo,
             strict_mode=STRICT_MODE,
         ),
-        system_prompt=PROMPTS[USE_LANGUAGE]["extract"].get_prompt(
+        system_prompt=PROMPTS[USE_LANGUAGE]["doc_extract"].get_prompt(
             PROMPTS[USE_LANGUAGE]["profile"].get_prompt(project_profiles_slots)
         ),
         temperature=0.2,  # precise
-        **PROMPTS[USE_LANGUAGE]["extract"].get_kwargs(),
+        **PROMPTS[USE_LANGUAGE]["doc_extract"].get_kwargs(),
     )
     if not p.ok():
         return p
